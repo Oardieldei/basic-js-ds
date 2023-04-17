@@ -6,38 +6,39 @@ const { Node } = require('../extensions/list-tree.js');
 * Implement simple binary search tree according to task description
 * using Node from extensions
 */
+
 class BinarySearchTree {
 	constructor() {
-		this.root = null;
+		this.rootVal = null
 	}
 
 	root() {
-		return this.root
+		return this.rootVal
 	}
 
 	add(data) {
 		let node = new Node(data)
-		if (this.root) {
-			this.insertNode(this.root, node)
+		if (this.rootVal) {
+			this.addNode(this.rootVal, node)
 		} else {
-			this.root = node
+			this.rootVal = node
 		}
 	}
 
-	insertNode(node, newNode) {
+	addNode(node, newNode) {
 		if (node.data > newNode.data) {
-			node.left ? this.insertNode(node.left, newNode) : node.left = newNode
+			node.left ? this.addNode(node.left, newNode) : node.left = newNode
 		} else {
-			node.right ? this.insertNode(node.right, newNode) : node.right = newNode
+			node.right ? this.addNode(node.right, newNode) : node.right = newNode
 		}
 	}
 
-	has(data, node = this.root) {
+	has(data, node = this.rootVal) {
 		if (node) {
 			if (node.data > data) {
-				return this.search(node.left, data)
+				return this.has(data, node.left)
 			} else if (node.data < data) {
-				return this.search(node.right, data)
+				return this.has(data, node.right)
 			} else {
 				return true
 			}
@@ -45,12 +46,12 @@ class BinarySearchTree {
 		return false
 	}
 
-	find(data, node = this.root) {
+	find(data, node = this.rootVal) {
 		if (node) {
 			if (node.data > data) {
-				return this.search(node.left, data)
+				return this.find(data, node.left)
 			} else if (node.data < data) {
-				return this.search(node.right, data)
+				return this.find(data, node.right)
 			} else {
 				return node
 			}
@@ -59,7 +60,7 @@ class BinarySearchTree {
 	}
 
 	remove(data) {
-		this.root = this.removeNode(this.root, data)
+		this.rootVal = this.removeNode(this.rootVal, data)
 	}
 
 	removeNode(node, data) {
@@ -110,12 +111,12 @@ class BinarySearchTree {
 		return node
 	}
 
-	min(node = this.root) {
-		return node.left ? this.min(node.left) : node
+	min(node = this.rootVal) {
+		return node.left ? this.min(node.left) : node.data
 	}
 
-	max(node = this.root) {
-		return node.right ? this.max(node.right) : node
+	max(node = this.rootVal) {
+		return node.right ? this.max(node.right) : node.data
 	}
 
 }
